@@ -15,4 +15,8 @@ public class AddressBook {
 		return listOfContacts;
 	}
 	
+	public void addContact(Contact contact) {
+		listOfContacts.add(contact);
+	}
+	
 }
