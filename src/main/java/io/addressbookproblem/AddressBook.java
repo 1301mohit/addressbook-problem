@@ -28,5 +28,12 @@ public class AddressBook {
 		listOfContacts.add(contact);
 		return "Edited Successfully";
 	}
+
+	public String deleteContact(String phoneNumber) {
+		Optional<Contact> optionalContact = listOfContacts.stream().filter(e -> e.getPhoneNumber().equals(phoneNumber)).findAny();
+		if( optionalContact.isEmpty()) return "NOT FOUND";
+		listOfContacts.remove(optionalContact.get());
+		return "Deleted Successfully";
+	}
 	
 }
