@@ -1,7 +1,7 @@
 package io.addressbookproblem;
 
-public class Contact {
-
+public class Person {
+	
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -11,12 +11,12 @@ public class Contact {
 	private String phoneNumber;
 	private String email;
 	
-	public Contact() {
+	public Person() {
 		super();
 	}
 
-	public Contact(String firstName, String lastName, String address, String city,
-			       String state, String zip, String phoneNumber, String email) {
+	public Person(String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNumber, String email) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -27,6 +27,8 @@ public class Contact {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
+	
+	
 
 	public String getFirstName() {
 		return firstName;
@@ -94,9 +96,8 @@ public class Contact {
 
 	@Override
 	public String toString() {
-		return "Contact [firstName=" + firstName + ", lastName=" + lastName + "," + 
-			   " address=" + address + ", city=" + city + ", state=" + state +
-			   ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
+		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
 	}
-	
+
 }

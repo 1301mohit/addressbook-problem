@@ -1,16 +1,16 @@
 package io.addressbookproblem;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 public class AddressBook {
 	
 	private String addressBookName;
-	private List<Contact> listOfContacts;
+	private List<Person> listOfContacts;
 	
 	public AddressBook() {
-		listOfContacts = new ArrayList<Contact>();
+		listOfContacts = new LinkedList<Person>();
 	}
 
 	public AddressBook(String addressBookName) {
@@ -26,7 +26,7 @@ public class AddressBook {
 		this.addressBookName = addressBookName;
 	}
 
-	public List<Contact> getListOfContacts() {
+	public List<Person> getListOfContacts() {
 		return listOfContacts;
 	}
 	
@@ -35,22 +35,28 @@ public class AddressBook {
 		return "AddressBook [addressBookName=" + addressBookName + "]";
 	}
 
-	public String addContact(Contact contact) {
+	public String addContact(Person contact) {
+		Optional<Person> optionalPerson = searchPerson(contact.getPhoneNumber());
+		if(optionalPerson.isPresent()) return "Already exist";
 		listOfContacts.add(contact);
 		return "Added Successfully";
 	}
 	
-	public String editContact(String phoneNumber, Contact contact) {
-		Optional<Contact> optionalContact = listOfContacts.stream().filter(e -> e.getPhoneNumber().equals(phoneNumber)).findAny();
-		if( optionalContact.isEmpty()) return "NOT FOUND";
+	public Optional<Person> searchPerson(String phoneNumber) {
+		return listOfContacts.stream().filter(e -> e.getPhoneNumber().equals(phoneNumber)).findAny();
+	}
+	
+	public String editContact(String phoneNumber, Person contact) {
+		Optional<Person> optionalContact = searchPerson(phoneNumber);
+		if(optionalContact.isEmpty()) return "NOT FOUND";
 		listOfContacts.remove(optionalContact.get());
 		listOfContacts.add(contact);
 		return "Edited Successfully";
 	}
 
 	public String deleteContact(String phoneNumber) {
-		Optional<Contact> optionalContact = listOfContacts.stream().filter(e -> e.getPhoneNumber().equals(phoneNumber)).findAny();
-		if( optionalContact.isEmpty()) return "NOT FOUND";
+		Optional<Person> optionalContact = searchPerson(phoneNumber);
+		if(optionalContact.isEmpty()) return "NOT FOUND";
 		listOfContacts.remove(optionalContact.get());
 		return "Deleted Successfully";
 	}

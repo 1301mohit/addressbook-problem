@@ -44,7 +44,7 @@ public class AddressBookMain {
 					int choice1 = scanner.nextInt();
 					switch (choice1) {
 					case 1:
-						Contact contact = new Contact();
+						Person contact = new Person();
 						System.out.print("Enter first name : ");
 						contact.setFirstName(scanner.next());
 						System.out.print("Enter last name : ");
@@ -65,7 +65,7 @@ public class AddressBookMain {
 						System.out.println(response);
 						break;
 					case 2:
-						Contact editContact = new Contact("Amit", "Kumar", "Mumbai", "Mumbai", "Maharastra", "123456",
+						Person editContact = new Person("Amit", "Kumar", "Mumbai", "Mumbai", "Maharastra", "123456",
 								"9999999999", "mohit@gmail.com");
 						System.out.println("Enter phone number : ");
 						String phoneNumber = scanner.next();
