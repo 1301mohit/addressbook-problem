@@ -6,31 +6,31 @@ public class AddressBookMain {
 	public static void main(String[] args) {
 		String response;
 		boolean flagForAddressBookSystem = true;
-		boolean flagForAddressBook = true;
 		AddressBook addressBook;
 		System.out.println("Welcome to Address Book Program");
 		Scanner scanner = new Scanner(System.in);
 		AddressBookSystem addressBookSystem = new AddressBookSystem();
 		while (flagForAddressBookSystem) {
+			boolean flagForAddressBook = true;
 			System.out.println("List of address book");
 			addressBookSystem.getListOfAddressBook().stream().forEach(System.out::println);
 			System.out.println("1.Create new addressbook");
 			System.out.println("2.Open addressbook");
-			System.out.println("3.Exit");
+			System.out.println("3.Search person in a city");
+			System.out.println("4.Exit");
 			System.out.println("Enter your choice : ");
 			int choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
 				System.out.println("Enter name of addressbook");
 				String addressBookName = scanner.next();
-				addressBook = new AddressBook();
-				addressBook.setAddressBookName(addressBookName);
-				response = addressBookSystem.createAddressBook(addressBook);
+				response = addressBookSystem.createAddressBook(addressBookName);
 				System.out.println(response);
 				break;
 			case 2:
+				System.out.println("List of addressbook");
+				addressBookSystem.getListOfAddressBook().forEach(addressBook1 -> System.out.println(addressBook1.getAddressBookName()));
 				System.out.println("Enter name of addressbook");
-				addressBook = new AddressBook();
 				addressBookName = scanner.next();
 				boolean checkAddressBook = addressBookSystem.openAddressBook(addressBookName);
 				if (!checkAddressBook)
@@ -61,7 +61,7 @@ public class AddressBookMain {
 						contact.setPhoneNumber(scanner.next());
 						System.out.print("Enter email : ");
 						contact.setEmail(scanner.next());
-						response = addressBook.addContact(contact);
+						response = addressBookSystem.addContact(contact, addressBookName);
 						System.out.println(response);
 						break;
 					case 2:
@@ -69,13 +69,13 @@ public class AddressBookMain {
 								"9999999999", "mohit@gmail.com");
 						System.out.println("Enter phone number : ");
 						String phoneNumber = scanner.next();
-						response = addressBook.editContact(phoneNumber, editContact);
+						response = addressBookSystem.editContact(phoneNumber, editContact, addressBookName);
 						System.out.println(response);
 						break;
 					case 3:
 						System.out.println("Enter phone number : ");
 						phoneNumber = scanner.next();
-						response = addressBook.deleteContact(phoneNumber);
+						response = addressBookSystem.deleteContact(phoneNumber, addressBookName);
 						System.out.println(response);
 						break;
 					case 4:
@@ -84,11 +84,15 @@ public class AddressBookMain {
 					default:
 						System.out.println("Please enter valid option");
 					}
-					if (choice != 4)
-						System.out.println(addressBook.getListOfContacts());
+					if(choice1 != 4)
+						System.out.println(addressBookSystem);
 				}
 				break;
 			case 3:
+				System.out.println("Enter city name");
+				String city = scanner.next();
+				addressBookSystem.getListOfPerson(city);
+			case 4:
 				flagForAddressBookSystem = false;
 				System.out.println("Thank you");
 				break;

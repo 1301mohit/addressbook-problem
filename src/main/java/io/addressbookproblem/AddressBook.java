@@ -29,36 +29,43 @@ public class AddressBook {
 	public List<Person> getListOfContacts() {
 		return listOfContacts;
 	}
-	
-	@Override
-	public String toString() {
-		return "AddressBook [addressBookName=" + addressBookName + "]";
+
+	public void setListOfContacts(List<Person> listOfContacts) {
+		this.listOfContacts = listOfContacts;
 	}
 
-	public String addContact(Person contact) {
+	@Override
+	public String toString() {
+		return "AddressBook{" +
+				"addressBookName='" + addressBookName + '\'' +
+				", listOfContacts=" + listOfContacts +
+				'}';
+	}
+
+	public List<Person> addContact(Person contact) {
 		Optional<Person> optionalPerson = searchPerson(contact.getPhoneNumber());
-		if(optionalPerson.isPresent()) return "Already exist";
-		listOfContacts.add(contact);
-		return "Added Successfully";
+		if(optionalPerson.isPresent()) return null;
+		this.getListOfContacts().add(contact);
+		return listOfContacts;
 	}
 	
 	public Optional<Person> searchPerson(String phoneNumber) {
 		return listOfContacts.stream().filter(e -> e.getPhoneNumber().equals(phoneNumber)).findAny();
 	}
 	
-	public String editContact(String phoneNumber, Person contact) {
+	public List<Person> editContact(String phoneNumber, Person contact) {
 		Optional<Person> optionalContact = searchPerson(phoneNumber);
-		if(optionalContact.isEmpty()) return "NOT FOUND";
+		if(optionalContact.isEmpty()) return null;
 		listOfContacts.remove(optionalContact.get());
 		listOfContacts.add(contact);
-		return "Edited Successfully";
+		return listOfContacts;
 	}
 
-	public String deleteContact(String phoneNumber) {
+	public List<Person> deleteContact(String phoneNumber) {
 		Optional<Person> optionalContact = searchPerson(phoneNumber);
-		if(optionalContact.isEmpty()) return "NOT FOUND";
+		if(optionalContact.isEmpty()) return null;
 		listOfContacts.remove(optionalContact.get());
-		return "Deleted Successfully";
+		return listOfContacts;
 	}
 	
 }
