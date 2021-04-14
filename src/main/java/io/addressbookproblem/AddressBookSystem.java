@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AddressBookSystem {
 
-	AddressBook addressBook;
 	private List<AddressBook> listOfAddressBook = new ArrayList<AddressBook>();
 
 	public List<AddressBook> getListOfAddressBook() {
@@ -23,7 +23,6 @@ public class AddressBookSystem {
 	@Override
 	public String toString() {
 		return "AddressBookSystem{" +
-				"addressBook=" + addressBook +
 				", listOfAddressBook=" + listOfAddressBook +
 				'}';
 	}
@@ -32,8 +31,8 @@ public class AddressBookSystem {
 		Optional<AddressBook> optionalAddressBook = this.listOfAddressBook.stream().filter(addressBook1 -> addressBookName.equals(addressBook1.getAddressBookName())).findAny();
 		if(!optionalAddressBook.isEmpty())
 			return "Already Exist";
-		addressBook = new AddressBook();
-		this.addressBook.setAddressBookName(addressBookName);
+		AddressBook addressBook = new AddressBook();
+		addressBook.setAddressBookName(addressBookName);
 		this.listOfAddressBook.add(addressBook);
 		return "AddressBook Created";
 	}
@@ -46,13 +45,16 @@ public class AddressBookSystem {
 	}
 
 
-	public void getListOfPerson(String city) {
-		List<List<Person>> collect = this.listOfAddressBook.stream()
-									 .map(addressBook -> addressBook.getListOfContacts().stream()
-											 		     .filter(person -> person.getCity().equals(city))
-											 			 .collect(Collectors.toList()))
-									 .collect(Collectors.toList());
-		System.out.println(collect);
+	public void getListOfPerson(String cityOrState) {
+		List<Person> listOfPerson = new ArrayList<>();
+		this.listOfAddressBook.stream()
+				.map(addressBook -> addressBook.getListOfContacts().stream()
+						.filter(person -> {
+							if (person.getCity().equals(cityOrState))
+								listOfPerson.add(person);
+							return true;
+						}));
+		listOfPerson.stream().forEach(System.out::println);
 	}
 
 	public Optional<AddressBook> searchAddressBook(String addressBookName) {
@@ -62,25 +64,23 @@ public class AddressBookSystem {
 	public String addContact(Person contact, String addressBookName) {
 		Optional<AddressBook> optionalAddressBook = searchAddressBook(addressBookName);
 		if(optionalAddressBook.isEmpty()) return "Addressbook Not Found";
-		List<Person> listOfPerson = addressBook.addContact(contact);
+		List<Person> listOfPerson = optionalAddressBook.get().addContact(contact);
 		if(listOfPerson == null) return "Already Exist";
-		optionalAddressBook.get().setListOfContacts(listOfPerson);
 		return "Added Successfully";
 	}
 
 	public String editContact(String phoneNumber, Person editContact, String addressBookName) {
 		Optional<AddressBook> optionalAddressBook = searchAddressBook(addressBookName);
 		if(optionalAddressBook.isEmpty()) return "Addressbook Not Found";
-		List<Person> listOfPerson = addressBook.editContact(phoneNumber, editContact);
+		List<Person> listOfPerson = optionalAddressBook.get().editContact(phoneNumber, editContact);
 		if(listOfPerson == null) return "Person not found";
-		optionalAddressBook.get().setListOfContacts(listOfPerson);
 		return "Edited Successfully";
 	}
 
 	public String deleteContact(String phoneNumber, String addressBookName) {
 		Optional<AddressBook> optionalAddressBook = searchAddressBook(addressBookName);
 		if(optionalAddressBook.isEmpty()) return "Addressbook Not Found";
-		List<Person> listOfPerson = addressBook.deleteContact(phoneNumber);
+		List<Person> listOfPerson = optionalAddressBook.get().deleteContact(phoneNumber);
 		if(listOfPerson == null) return "Person not found";
 		optionalAddressBook.get().setListOfContacts(listOfPerson);
 		return "Deleted Successfully";
