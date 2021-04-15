@@ -18,7 +18,9 @@ public class AddressBookMain {
             System.out.println("2.Open addressbook");
             System.out.println("3.View person by city");
             System.out.println("4.View person by state");
-            System.out.println("5.Exit");
+            System.out.println("5.Count person by city");
+            System.out.println("6.Count person by state");
+            System.out.println("7.Exit");
             System.out.println("Enter your choice : ");
             int choice = scanner.nextInt();
             switch (choice) {
@@ -100,6 +102,12 @@ public class AddressBookMain {
                     addressBookSystem.getListOfPersonAccordingToState(state).stream().forEach(System.out::println);
                     break;
                 case 5:
+                    addressBookSystem.printCountByCity();
+                    break;
+                case 6:
+                    addressBookSystem.printCountByState();
+                    break;
+                case 7:
                     flagForAddressBookSystem = false;
                     System.out.println("Thank you");
                     break;

@@ -102,4 +102,14 @@ public class AddressBookSystem {
 		return "Deleted Successfully";
 	}
 
+	public void printCountByCity() {
+		System.out.println("Print city and its count");
+		this.listOfPersonAccordingToCity.keySet().stream().forEach(city -> System.out.println(city+" -> "+this.listOfPersonAccordingToCity.get(city).size()));
+	}
+
+	public void printCountByState() {
+		System.out.println("Print state and its count");
+		this.listOfPersonAccordingToState.keySet().stream().forEach(state -> System.out.println(state+" -> "+this.listOfPersonAccordingToState.get(state).size()));
+	}
+
 }
