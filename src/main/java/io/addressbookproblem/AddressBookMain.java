@@ -16,8 +16,8 @@ public class AddressBookMain {
             addressBookSystem.getListOfAddressBook().stream().forEach(System.out::println);
             System.out.println("1.Create new addressbook");
             System.out.println("2.Open addressbook");
-            System.out.println("3.Search person in a city");
-            System.out.println("4.Search person in a state");
+            System.out.println("3.View person by city");
+            System.out.println("4.View person by state");
             System.out.println("5.Exit");
             System.out.println("Enter your choice : ");
             int choice = scanner.nextInt();
@@ -92,12 +92,12 @@ public class AddressBookMain {
                 case 3:
                     System.out.println("Enter city name");
                     String city = scanner.next();
-                    addressBookSystem.getListOfPerson(city);
+                    addressBookSystem.getListOfPersonAccordingToCity(city).stream().forEach(System.out::println);
                     break;
                 case 4:
                     System.out.println("Enter state name");
                     String state = scanner.next();
-                    addressBookSystem.getListOfPerson(state);
+                    addressBookSystem.getListOfPersonAccordingToState(state).stream().forEach(System.out::println);
                     break;
                 case 5:
                     flagForAddressBookSystem = false;

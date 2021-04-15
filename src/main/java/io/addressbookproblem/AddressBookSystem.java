@@ -1,16 +1,43 @@
 package io.addressbookproblem;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AddressBookSystem {
 
 	private List<AddressBook> listOfAddressBook = new ArrayList<AddressBook>();
+
+	private Map<String, List<Person>> listOfPersonAccordingToCity = new HashMap<>();
+	private Map<String, List<Person>> listOfPersonAccordingToState = new HashMap<>();
+
+	public List<Person> getListOfPersonAccordingToCity(String city) {
+		return this.listOfPersonAccordingToCity.get(city);
+	}
+
+	public void setListOfPersonAccordingToCity(Person contact) {
+		if(this.listOfPersonAccordingToCity.get(contact.getCity()) == null) {
+			List<Person> listOfPerson = new ArrayList<>();
+			listOfPerson.add(contact);
+			this.listOfPersonAccordingToCity.put(contact.getCity(), listOfPerson);
+		}
+		else
+			this.listOfPersonAccordingToCity.get(contact.getCity()).add(contact);
+	}
+
+	public List<Person> getListOfPersonAccordingToState(String state) {
+		return this.listOfPersonAccordingToState.get(state);
+	}
+
+	public void setListOfPersonAccordingToState(Person contact) {
+		if(this.listOfPersonAccordingToState.get(contact.getState()) == null) {
+			List<Person> listOfPerson = new ArrayList<>();
+			listOfPerson.add(contact);
+			this.listOfPersonAccordingToState.put(contact.getState(), listOfPerson);
+		}
+		else
+			this.listOfPersonAccordingToState.get(contact.getState()).add(contact);
+	}
 
 	public List<AddressBook> getListOfAddressBook() {
 		return listOfAddressBook;
@@ -44,19 +71,6 @@ public class AddressBookSystem {
 		return true;
 	}
 
-
-	public void getListOfPerson(String cityOrState) {
-		List<Person> listOfPerson = new ArrayList<>();
-		this.listOfAddressBook.stream()
-				.map(addressBook -> addressBook.getListOfContacts().stream()
-						.filter(person -> {
-							if (person.getCity().equals(cityOrState))
-								listOfPerson.add(person);
-							return true;
-						}));
-		listOfPerson.stream().forEach(System.out::println);
-	}
-
 	public Optional<AddressBook> searchAddressBook(String addressBookName) {
 		return listOfAddressBook.stream().filter(addressBook1 -> addressBook1.getAddressBookName().equals(addressBookName)).findAny();
 	}
@@ -66,6 +80,8 @@ public class AddressBookSystem {
 		if(optionalAddressBook.isEmpty()) return "Addressbook Not Found";
 		List<Person> listOfPerson = optionalAddressBook.get().addContact(contact);
 		if(listOfPerson == null) return "Already Exist";
+		this.setListOfPersonAccordingToCity(contact);
+		this.setListOfPersonAccordingToState(contact);
 		return "Added Successfully";
 	}
 
