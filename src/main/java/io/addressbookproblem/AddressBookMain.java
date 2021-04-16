@@ -1,5 +1,6 @@
 package io.addressbookproblem;
 
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -42,7 +43,11 @@ public class AddressBookMain {
                         System.out.println("1.Add Contact");
                         System.out.println("2.Edit Contact");
                         System.out.println("3.Delete");
-                        System.out.println("4.Exit");
+                        System.out.println("4.Sort by first name");
+                        System.out.println("5.Sort by city");
+                        System.out.println("6.Sort by state");
+                        System.out.println("7.Sort by zip");
+                        System.out.println("8.Exit");
                         System.out.print("Enter your choice : ");
                         int choice1 = scanner.nextInt();
                         switch (choice1) {
@@ -82,6 +87,18 @@ public class AddressBookMain {
                                 System.out.println(response);
                                 break;
                             case 4:
+                                addressBookSystem.sortByPersonName(addressBookName);
+                                break;
+                            case 5:
+                                addressBookSystem.sortByCity(addressBookName);
+                                break;
+                            case 6:
+                                addressBookSystem.sortByState(addressBookName);
+                                break;
+                            case 7:
+                                addressBookSystem.sortByZip(addressBookName);
+                                break;
+                            case 8:
                                 flagForAddressBook = false;
                                 break;
                             default:

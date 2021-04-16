@@ -112,4 +112,31 @@ public class AddressBookSystem {
 		this.listOfPersonAccordingToState.keySet().stream().forEach(state -> System.out.println(state+" -> "+this.listOfPersonAccordingToState.get(state).size()));
 	}
 
+	public void sortByPersonName(String addressBookName) {
+		System.out.println("Sort person list by person name");
+		getListOfPerson(addressBookName)
+				.stream()
+				.sorted(Comparator.comparing(Person::getFirstName).thenComparing(Comparator.comparing(Person::getLastName)))
+				.forEach(System.out::println);
+	}
+
+	public List<Person> getListOfPerson(String addressBookName) {
+		return listOfAddressBook.stream()
+				.filter(addressBook -> addressBook.getAddressBookName().equals(addressBookName))
+				.findAny()
+				.get()
+				.getListOfContacts();
+	}
+
+	public void sortByCity(String addressBookName) {
+		getListOfPerson(addressBookName)
+				.stream()
+				.sorted((p1,p2) -> p1.getCity().compareTo(p2.getCity())).forEach(System.out::println);
+	}
+
+	public void sortByState(String addressBookName) {
+	}
+
+	public void sortByZip(String addressBookName) {
+	}
 }
