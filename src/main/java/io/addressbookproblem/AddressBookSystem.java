@@ -129,14 +129,24 @@ public class AddressBookSystem {
 	}
 
 	public void sortByCity(String addressBookName) {
+		System.out.println("Sort person list by city");
 		getListOfPerson(addressBookName)
 				.stream()
 				.sorted((p1,p2) -> p1.getCity().compareTo(p2.getCity())).forEach(System.out::println);
 	}
 
 	public void sortByState(String addressBookName) {
+		System.out.println("Sort person list by state");
+		getListOfPerson(addressBookName)
+				.stream()
+				.sorted(Comparator.comparing(Person::getState)).forEach(System.out::println);
 	}
 
 	public void sortByZip(String addressBookName) {
+		System.out.println("Sort person list by zip");
+		getListOfPerson(addressBookName)
+				.stream()
+				.sorted(Comparator.comparing(Person::getZip)).forEach(System.out::println);
 	}
+
 }
